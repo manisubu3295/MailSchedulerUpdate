@@ -1,0 +1,123 @@
+
+<style>
+  .cursVal{
+    cursor: pointer;
+  }
+</style>
+<div class="login-page">
+    <div class="content px20">
+      <form class="login-form" [formGroup]="studentForm" (ngSubmit)="onRegister()" #resetStudentForm="ngForm" novalidate>
+      <!-- <form class="login-form" #myForm="ngForm" (ngSubmit)="onLogin(myForm.value)"> -->
+        <div class="text-center">
+          <h2 class="app-name">Register</h2>
+        </div>
+       
+        <div fxLayout="row">
+          <div fxFlexFill>
+        
+            <mat-form-field class="w-50">
+              <input matInput placeholder="First Name" formControlName = "firstName"  >
+              <mat-error *ngIf="handleError('firstName', 'required')">
+                Please enter <strong>First Name</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-50">
+              <input matInput placeholder="Last Name" formControlName = "lastName"  >
+              <mat-error *ngIf="handleError('lastName', 'required')">
+                Please enter <strong>Last Name</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <input matInput  placeholder="Email" formControlName = "email" email="true">
+              <mat-error *ngIf="handleError('email','email')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="handleError('email', 'required')">
+                Please enter <strong>Email</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100"> 
+                <input matInput  formControlName = "mobile" ng2TelInput>
+                <mat-error *ngIf="handleError('mobile', 'required')">
+                  Please enter <strong>Mobile</strong>
+                </mat-error>
+              </mat-form-field>
+             
+             
+              
+              
+                
+                <mat-radio-group aria-label="Select an option" formControlName="gender">
+                  <mat-label>Gender    : </mat-label>
+                  <mat-radio-button value="Male">Male</mat-radio-button>
+                  <mat-radio-button value="Female">Female  </mat-radio-button>
+                  <mat-radio-button value="others">Others  </mat-radio-button>
+                </mat-radio-group>
+           
+              <mat-form-field class="w-100">
+               
+                  <mat-label>Choose an option</mat-label>
+                  <select matNativeControl [disabled]="disableSelect.value" formControlName = "maritalStatus">
+                    <option value=""></option>
+                    <option value="single">Single</option>
+                    <option value="mwithoutchild">Married without children</option>
+                    <option value="mwithchild">Married with children</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="separated">Separated</option>
+                    <option value="widowed">Widowed</option>
+                  </select>
+                
+                <mat-error *ngIf="handleError('maritalStatus', 'required')">
+                  Section is required
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-50">
+                <input matInput readonly [matDatepicker]="picker" placeholder="Date of birth" formControlName="dob"
+                  (dateChange)="formatDate($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="handleError('dob', 'required')">
+                  Date of birth is required
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-50">
+                <input matInput placeholder="Country" formControlName = "country" >
+                <mat-error *ngIf="handleError('country', 'required')">
+                  Please enter <strong>Country</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <mat-icon matSuffix (click)="hide = !hide" class="cursVal">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="handleError('password', 'required')">
+                  Please enter <strong>Password</strong>
+                </mat-error>   </mat-form-field>
+              <!-- <mat-form-field class="w-100">
+                <input matInput  placeholder="Password" formControlName = "password" >
+                <mat-error *ngIf="handleError('password', 'required')">
+                  Please enter <strong>Password</strong>
+                </mat-error>
+              </mat-form-field> -->
+
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Re- Enter Password" [type]="hide1 ? 'password' : 'text'" formControlName="repassword" required>
+                <mat-icon matSuffix (click)="hide1 = !hide1" class="cursVal">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="handleError('repassword', 'required')">
+                  Please enter <strong>Password</strong>
+                </mat-error>   </mat-form-field>
+                
+             
+          </div>
+        </div>
+       
+        <div fxLayout="row">
+          <div fxFlexFill>
+            <button type="submit" mat-raised-button color="primary" class="w-100">Register</button>
+            <button type="button" mat-button color="primary" class="w-100" (click)="onLogin()">Existing User ? Login</button>
+          </div>
+        </div>
+  {{displayError}}
+      </form>
+    </div>
+  </div>
+ 

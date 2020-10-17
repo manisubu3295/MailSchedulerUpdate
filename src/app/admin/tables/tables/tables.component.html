@@ -1,12 +1,15 @@
-<section id="sample-table" class="mat-elevation-z8 bg-white">
-  <div class="row push-right">  
-    <input type="button" class="btn btn-danger" (click)="DeleteData()" value="Delete">  
-        <br>  
-        </div> 
+
+<section id="sample-table " class="mat-elevation-z8 bg-white">
+  
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
-  <table mat-table [dataSource]="dataSource" matSort class="w-100">
+  <div class="row" >  
+    <button mat-raised-button (click)="openDialog()">Send Mail</button> 
+    <input type="button" class="btn btn-danger pull-right" (click)="exporter.exportTable('xlsx')" value="Export">
+        <br>  
+        </div> 
+  <table mat-table matTableExporter [dataSource]="dataSource" matSort class="w-100" #exporter="matTableExporter">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -17,25 +20,34 @@
         </mat-checkbox>
       </td>
     </ng-container>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row._id}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="progress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-      <td mat-cell *matCellDef="let row"> {{row.student_name}}</td>
-    </ng-container>
-
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let row"> {{row.student_email}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.firstName}} {{row.lastName}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-      <td mat-cell *matCellDef="let row" [style.color]="row.section"> {{row.color}} </td>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> EmailID </th>
+      <td mat-cell *matCellDef="let row"> {{row.email}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="mobile">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
+      <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Country  </th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.country"> {{row.country}} </td>
+    </ng-container>
+    <ng-container matColumnDef="dob">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.dob"> {{row.dob}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.gender"> {{row.gender}} </td>
+    </ng-container>
+   
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>

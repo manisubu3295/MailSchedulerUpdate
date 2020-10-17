@@ -1,0 +1,8 @@
+ <form #f="ngForm" [formGroup]="studentForm">
+    <ngx-mat-intl-tel-input
+    [preferredCountries]="['us', 'gb']"
+    [enablePlaceholder]="true"
+    [enableSearch]="true"
+    name="mobile"
+    formControlName="mobile"></ngx-mat-intl-tel-input>
+  </form> 

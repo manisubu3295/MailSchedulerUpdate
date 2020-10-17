@@ -7,13 +7,25 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { RegisterApiService } from '../../../shared/register.api.service';
 import { Student } from '../../../shared/student';
 
+interface MailStatus {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
 export class GridComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['select', 'id', 'name', 'progress', 'color'];
+  foods: MailStatus[] = [
+    {value: 'all', viewValue: 'All'},
+    {value: '1', viewValue: 'Success'},
+    {value: '0', viewValue: 'Failed'}
+  ];
+  selectedStatus:string;
+  
+  
+  displayedColumns = [ 'id', 'name', 'progress', 'color'];
   dataSource: MatTableDataSource<Student>;
   selection: SelectionModel<Student>;
   StudentData:any= [];
@@ -21,19 +33,8 @@ export class GridComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor( private studentApi: RegisterApiService) {
-    this.studentApi.GetStudents().subscribe(data => {
-      this.StudentData = data;
-      console.log(JSON.stringify(data)+"data")
-   //   console.log(JSON.stringify(this.StudentData))
-   //   this.StudentData=[{"select":"","student_name":"mani","student_email":"test","section":"E","_id":1,"subjects":[],"dob":"","gender":""}]
-   // this.StudentData=JSON.stringify(this.StudentData);
-      console.log(this.StudentData);
-      this.dataSource = new MatTableDataSource<Student>(this.StudentData);
-      setTimeout(() => {
-        this.dataSource.paginator = this.paginator;
-      
-      }, 0);
-    }) 
+   
+     
   }
 
   ngOnInit() {
@@ -51,6 +52,24 @@ export class GridComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  onStatusSelection1() {
+    console.log(this.selectedStatus+"manikandan Subramaniyan");
+    
+      this.studentApi.getMailStatus(this.selectedStatus).subscribe(data => {
+        this.StudentData = data;
+        console.log(JSON.stringify(data)+"data")
+     //   console.log(JSON.stringify(this.StudentData))
+     //   this.StudentData=[{"select":"","student_name":"mani","student_email":"test","section":"E","_id":1,"subjects":[],"dob":"","gender":""}]
+     // this.StudentData=JSON.stringify(this.StudentData);
+        console.log(this.StudentData);
+        this.dataSource = new MatTableDataSource<Student>(this.StudentData);
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        
+        }, 0);
+      })
+    
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

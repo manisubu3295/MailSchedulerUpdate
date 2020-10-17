@@ -14,6 +14,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { DataService } from './data.service';
 import { PolarChartComponent } from './polar-chart/polar-chart.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { PolarChartComponent } from './polar-chart/polar-chart.component';
     MatCardModule,
     MatGridListModule,
     FlexLayoutModule,
-    Ng2Charts
+    Ng2Charts,
+    FormsModule
   ],
   declarations: [
     HomeComponent,

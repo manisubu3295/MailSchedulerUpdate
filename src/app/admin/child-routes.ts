@@ -6,12 +6,7 @@ export const childRoutes = [
     data: { icon: 'dashboard', text: 'Dashboard' }
   },
   // ,
-  // {
-  //   path: 'charts',
-  //   loadChildren: () =>
-  //     import('./charts/charts.module').then(m => m.ChartsModule),
-  //   data: { icon: 'bar_chart', text: 'Charts' }
-  // },
+  
   {
     path: 'tables',
     loadChildren: () =>
@@ -24,11 +19,23 @@ export const childRoutes = [
   //   data: { icon: 'assignment', text: 'Forms' }
   // },
   {
-    path: 'mat-grid',
+    path: 'mailDetail',
     loadChildren: () =>
       import('./mat-grid/mat-grid.module').then(m => m.MatGridModule),
     data: { icon: 'grid_on', text: 'Mail Details' }
   },
+  {
+       path: 'userRole',
+       loadChildren: () =>
+       import('./google-map-demo/google-map-demo.module').then(
+        m => m.GoogleMapDemoModule
+        ),
+       data: { icon: 'place', text: 'User Role' }
+     }, {
+    path: 'profile',
+    loadChildren: () => import('./forms/forms.module').then(m => m.FormsModule),
+   
+  }
   // {
   //   path: 'mat-components',
   //   loadChildren: () =>

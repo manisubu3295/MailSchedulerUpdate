@@ -6,4 +6,5 @@ export class Student {
     subjects:any;
     dob: any;
     gender: String;
+    mailStatus:string;
  }

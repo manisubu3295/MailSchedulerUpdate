@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +6,9 @@ import { UserData, DataService } from '../data.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RegisterApiService } from '../../../shared/register.api.service';
 import { Student } from '../../../shared/student';
+import {User} from '../../../shared/User';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-tables',
@@ -13,22 +16,23 @@ import { Student } from '../../../shared/student';
   styleUrls: ['./tables.component.scss']
 })
 export class TablesComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['select', 'id', 'name', 'progress', 'color'];
+  
+  displayedColumns = ['select', 'name', 'email', 'mobile', 'country','dob','gender'];
   dataSource: MatTableDataSource<Student>;
   selection: SelectionModel<Student>;
-  StudentData:any= [];
-
+  user:any= [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private readonly dataService: DataService, private studentApi: RegisterApiService) {
-    this.studentApi.GetStudents().subscribe(data => {
-      this.StudentData = data;
-      console.log(JSON.stringify(data)+"data")
-   //   console.log(JSON.stringify(this.StudentData))
-   //   this.StudentData=[{"select":"","student_name":"mani","student_email":"test","section":"E","_id":1,"subjects":[],"dob":"","gender":""}]
-   // this.StudentData=JSON.stringify(this.StudentData);
-      console.log(this.StudentData);
-      this.dataSource = new MatTableDataSource<Student>(this.StudentData);
+  @ViewChild('TABLE') table: ElementRef;
+  subject: string;
+  body: string;
+
+  constructor(private readonly dataService: DataService, private studentApi: RegisterApiService,public dialog: MatDialog) {
+    this.studentApi.GetUserDetails().subscribe(data => {
+      this.user = data;
+      console.log(JSON.stringify(data)+"data");
+      console.log(this.user);
+      this.dataSource = new MatTableDataSource<Student>(this.user);
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
       
@@ -37,7 +41,7 @@ export class TablesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.StudentData);
+    this.dataSource = new MatTableDataSource(this.user);
     this.selection = new SelectionModel<Student>(true, []);
   }
 
@@ -66,13 +70,13 @@ export class TablesComponent implements OnInit, AfterViewInit {
       ? this.selection.clear()
       : this.dataSource.data.forEach(row => this.selection.select(row));
   }
-  DeleteData() {  
-    debugger;  
+  sendMail() {  
+  //  debugger;  
     console.log("inside 1")
     const numSelected = this.selection.selected; 
     console.log("===>"+JSON.stringify(numSelected)); 
   if (numSelected.length > 0) {  
-        if (confirm("Are you sure to delete items ")) {  
+        if (confirm("Are you sure to send mail ")) {  
              this.studentApi.sendmail(numSelected).subscribe(result => {  
                  alert(result);  
          //        this.LoadData();  
@@ -81,5 +85,34 @@ export class TablesComponent implements OnInit, AfterViewInit {
      } else {  
        alert("Select at least one row");  
     } 
+  }
+  openDialog(): void {
+    console.log("inside openDialog method")
+     this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px'
+    });
+
+  }
+
 }
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    console.log("inside close")
+    this.dialogRef.close();
+  }
+
+}
+export interface DialogData {
+  subject: string;
+  body: string;
 }

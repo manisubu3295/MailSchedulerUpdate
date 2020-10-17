@@ -15,7 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'autocomplete'
+        redirectTo: 'profile'
       },
       {
         path: 'autocomplete',
@@ -34,7 +34,7 @@ const routes: Routes = [
         component: SliderComponent
       },
       {
-        path: 'inputs',
+        path: 'profile',
         component: InputsComponent
       },
       {
@@ -43,7 +43,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'autocomplete'
+        redirectTo: 'profile'
       }
     ]
   }

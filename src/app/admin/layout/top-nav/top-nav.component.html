@@ -17,20 +17,21 @@
   <button class="hidden-sm" mat-icon-button [matMenuTriggerFor]="profile">
     <mat-icon>account_circle</mat-icon>
   </button>
-  <mat-menu #profile="matMenu" [overlapTrigger]="false">
+   <mat-menu #profile="matMenu" [overlapTrigger]="false">
     <button mat-menu-item>
       <mat-icon>person</mat-icon>
-      <span>Profile</span>
+      <span><a routerLink="/profile">Profile</a></span>
     </button>
     <button mat-menu-item>
       <mat-icon>inbox</mat-icon>
       <span>Inbox</span>
     </button>
+   
     <button mat-menu-item>
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
-  </mat-menu>
+   </mat-menu> 
   <button mat-icon-button (click)="onLoggedout()">
     <mat-icon>exit_to_app</mat-icon>
   </button>

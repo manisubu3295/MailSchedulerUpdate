@@ -1,13 +1,19 @@
 <section id="sample-table" class="mat-elevation-z8 bg-white">
-  <div class="row push-right">  
-    <input type="button" class="btn btn-danger" (click)="DeleteData()" value="Delete">  
-        <br>  
-        </div> 
+ 
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Select" [(ngModel)]="selectedStatus" (ngModelChange)="onStatusSelection1()">
+      <mat-option *ngFor="let food of foods" [value]="food.value">
+        {{ food.viewValue }}
+      </mat-option>
+    </mat-select>
+  
+  </mat-form-field>
   <table mat-table [dataSource]="dataSource" matSort class="w-100">
-    <ng-container matColumnDef="select">
+    
+    <!-- <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
@@ -16,25 +22,25 @@
         <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
-    </ng-container>
+    </ng-container> -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
       <td mat-cell *matCellDef="let row"> {{row._id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="progress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
       <td mat-cell *matCellDef="let row"> {{row.student_name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
       <td mat-cell *matCellDef="let row"> {{row.student_email}} </td>
     </ng-container>
 
     <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-      <td mat-cell *matCellDef="let row" [style.color]="row.section"> {{row.color}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.section"> {{row.mailStatus}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

@@ -1,39 +1,51 @@
+
+<style>
+  .cursVal{
+    cursor: pointer;
+  }
+</style>
 <div class="login-page">
-  <div class="content px20">
-    <form class="login-form" #myForm="ngForm" (ngSubmit)="onLogin(myForm.value)">
-      <div class="text-center">
-        <h2 class="app-name">Register</h2>
-      </div>
-      <div fxLayout="row">
-        <div fxFlexFill>
-          <mat-form-field class="w-100">
-            <input matInput placeholder="Student Name" name = "student_name" ngModel >
-          </mat-form-field>
-          <mat-form-field class="w-100">
-            <input matInput  placeholder="Student Email" name = "student_email" ngModel>
-          </mat-form-field>
-          <mat-form-field class="w-100">
-              <input matInput placeholder="Section" name = "section" ngModel>
-            </mat-form-field>
-            <mat-form-field class="w-100">
-              <input matInput placeholder="Subject" name = "subjects" ngModel>
-            </mat-form-field>
-            <mat-form-field class="w-100">
-              <input matInput  placeholder="Date of Birth" name = "dob" ngModel>
-            </mat-form-field>
-            <mat-form-field class="w-100">
-              <input matInput placeholder="Gender" name = "gender" ngModel>
-            </mat-form-field>
+    <div class="content px20">
+      <form class="login-form" [formGroup]="studentForm" (ngSubmit)="onLogin()" #resetStudentForm="ngForm" novalidate>
+      <!-- <form class="login-form" #myForm="ngForm" (ngSubmit)="onLogin(myForm.value)"> -->
+        <div class="text-center">
+          <h2 class="app-name">Login</h2>
         </div>
-      </div>
-  
-      <div fxLayout="row">
-        <div fxFlexFill>
-          <button type="submit" mat-raised-button color="primary" class="w-100">Register</button>
-          
+       
+        <div fxLayout="row">
+          <div fxFlexFill>
+        
+           
+            <mat-form-field class="w-100">
+              <input matInput  placeholder="Email" formControlName = "email" email="true">
+              <mat-error *ngIf="handleError('email','email')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="handleError('email', 'required')">
+                Please enter <strong>Email</strong>
+              </mat-error>
+            </mat-form-field>
+           
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                <mat-icon matSuffix (click)="hide = !hide" class="cursVal">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="handleError('password', 'required')">
+                  Please enter <strong>Password</strong>
+                </mat-error>   </mat-form-field>
+            
+                
+             
+          </div>
         </div>
-      </div>
-{{displayError}}
-    </form>
+       
+        <div fxLayout="row">
+          <div fxFlexFill>
+            <button type="submit" mat-raised-button color="primary" class="w-100">Login</button>
+            <button type="button" mat-button color="primary" class="w-100" (click)="onRegister()">New user ? Create Account</button>
+          </div>
+        </div>
+  {{displayError}}
+      </form>
+    </div>
   </div>
-</div>
+ 

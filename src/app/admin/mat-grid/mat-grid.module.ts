@@ -12,6 +12,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -22,10 +24,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatButtonModule,    
     MatTableModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    FormsModule
   ],
   declarations: [GridComponent]
 })
